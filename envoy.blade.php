@@ -1,8 +1,8 @@
 @servers(['web' => 'digitalocean'])
 
 @task('deploy', ['on' => 'web'])
-    cd /var/www/vue-app
+    cd /var/www/myapp
     git pull origin main
-    npm install
-    npm run build
+    php artisan migrate --force
+    php artisan optimize:clear
 @endtask
