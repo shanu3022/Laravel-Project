@@ -8,12 +8,12 @@ use App\Jobs\TestJob;
 
 class Kernel extends ConsoleKernel
 {
-    protected function schedule(Schedule $schedule)
+    protected function schedule(Schedule $schedule): void
     {
         $schedule->job(new TestJob())->everyMinute();
     }
 
-    protected function commands()
+    protected function commands(): void
     {
         $this->load(__DIR__.'/Commands');
     }
