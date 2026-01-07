@@ -1,4 +1,4 @@
-use App\Jobs\KernelTestJob;
+use App\Jobs\TestJob;
 use Illuminate\Console\Scheduling\Schedule;
 
 protected function schedule(Schedule $schedule)
