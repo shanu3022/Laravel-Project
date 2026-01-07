@@ -1,7 +1,20 @@
-use App\Jobs\TestJob;
-use Illuminate\Console\Scheduling\Schedule;
+<?php
 
-protected function schedule(Schedule $schedule)
+namespace App\Console;
+
+use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Jobs\TestJob;
+
+class Kernel extends ConsoleKernel
 {
-    $schedule->job(new TestJob())->everyMinute();
+    protected function schedule(Schedule $schedule)
+    {
+        $schedule->job(new TestJob())->everyMinute();
+    }
+
+    protected function commands()
+    {
+        $this->load(__DIR__.'/Commands');
+    }
 }
