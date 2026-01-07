@@ -8,13 +8,21 @@ use App\Jobs\TestJob;
 
 class Kernel extends ConsoleKernel
 {
-    protected function schedule(Schedule $schedule): void
+    /**
+     * Define the application's command schedule.
+     */
+    protected function schedule(Schedule $schedule)
     {
+        // Schedule TestJob to run every minute
         $schedule->job(new TestJob())->everyMinute();
     }
 
-    protected function commands(): void
+    /**
+     * Register the commands for the application.
+     */
+    protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
+        require base_path('routes/console.php');
     }
 }
