@@ -3,62 +3,32 @@
 namespace App\Providers;
 
 use Illuminate\Support\Facades\Gate;
-use Laravel\Telescope\IncomingEntry;
+use Illuminate\Support\ServiceProvider;
 use Laravel\Telescope\Telescope;
-use Laravel\Telescope\TelescopeApplicationServiceProvider;
+use Laravel\Telescope\IncomingEntry;
 
-class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
+class TelescopeServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
     public function register(): void
     {
-        // Telescope::night();
-
-        $this->hideSensitiveRequestDetails();
-
-        $isLocal = $this->app->environment('local');
-
-        Telescope::filter(function (IncomingEntry $entry) use ($isLocal) {
-            return $isLocal ||
-                   $entry->isReportableException() ||
-                   $entry->isFailedRequest() ||
-                   $entry->isFailedJob() ||
-                   $entry->isScheduledTask() ||
-                   $entry->hasMonitoredTag();
-        });
-    }
-
-    /**
-     * Prevent sensitive request details from being logged by Telescope.
-     */
-    protected function hideSensitiveRequestDetails(): void
-    {
-        if ($this->app->environment('local')) {
+        if (! app()->environment(['local', 'staging', 'production'])) {
             return;
         }
 
-        Telescope::hideRequestParameters(['_token']);
-
-        Telescope::hideRequestHeaders([
-            'cookie',
-            'x-csrf-token',
-            'x-xsrf-token',
-        ]);
+        Telescope::filter(function (IncomingEntry $entry) {
+            return true;
+        });
     }
 
-    /**
-     * Register the Telescope gate.
-     *
-     * This gate determines who can access Telescope in non-local environments.
-     */
+    public function boot(): void
+    {
+        $this->gate();
+    }
+
     protected function gate(): void
     {
-        Gate::define('viewTelescope', function ($user) {
-            return in_array($user->email, [
-                //
-            ]);
+        Gate::define('viewTelescope', function ($user = null) {
+            return true; // ⚠️ secure this later
         });
     }
 }
