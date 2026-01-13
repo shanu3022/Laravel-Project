@@ -1,7 +1,7 @@
 <?php
 
 use Laravel\Pulse\Http\Middleware\Authorize;
-use Laravel\Pulse\Facades\Pulse;
+// use Laravel\Pulse\Pulse;
 use Laravel\Pulse\Recorders;
 
 return [
@@ -140,9 +140,10 @@ return [
         Recorders\CacheInteractions::class => [
             'enabled' => env('PULSE_CACHE_INTERACTIONS_ENABLED', true),
             'sample_rate' => env('PULSE_CACHE_INTERACTIONS_SAMPLE_RATE', 1),
-            'ignore' => [
-                ...Pulse::defaultVendorCacheKeys(),
-            ],
+            // 'ignore' => [
+            //     ...Pulse::defaultVendorCacheKeys(),
+            // ],
+            'ignore' => [],
             'groups' => [
                 '/^job-exceptions:.*/' => 'job-exceptions:*',
                 // '/:\d+/' => ':*',
