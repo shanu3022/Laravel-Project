@@ -2,34 +2,25 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\ServiceProvider;
 use Laravel\Telescope\Telescope;
-use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\TelescopeApplicationServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
 {
     public function register(): void
     {
-        if (! app()->environment(['local', 'staging', 'production'])) {
-            return;
-        }
+        Telescope::night();
 
-        Telescope::filter(function (IncomingEntry $entry) {
+        Telescope::filter(function () {
             return true;
         });
-    }
-
-    public function boot(): void
-    {
-        $this->gate();
     }
 
     protected function gate(): void
     {
         Gate::define('viewTelescope', function ($user = null) {
-            return true; // ⚠️ secure this later
+            return true; // 👈 THIS removes 403
         });
     }
 }
