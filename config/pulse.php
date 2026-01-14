@@ -122,7 +122,7 @@ return [
 
     'middleware' => [
         'web',
-        \Laravel\Pulse\Http\Middleware\Authorize::class,
+        Authorize::class,
     ],
 
     /*
