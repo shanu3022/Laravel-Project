@@ -5,5 +5,4 @@ return [
     App\Providers\PulseServiceProvider::class,
     App\Providers\SchedulerServiceProvider::class,
     App\Providers\TelescopeServiceProvider::class,
-    App\Providers\PulseServiceProvider::class,
 ];

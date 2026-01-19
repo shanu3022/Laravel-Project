@@ -9,8 +9,8 @@ class PulseServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        Gate::define('viewPulse', function ($user) {
-            return $user;
+        Gate::define('viewPulse', function ($user = null) {
+            return true;
         });
     }
 }
